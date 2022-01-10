@@ -8,9 +8,11 @@ import {
   Param,
   Patch,
   Post,
-  Response,
+  Response
 } from '@nestjs/common';
-import { CoursesService } from './courses.service';
+import { CoursesService } from '../services/courses.service';
+
+
 
 @Controller('courses')
 export class CoursesController {
