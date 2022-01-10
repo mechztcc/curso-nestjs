@@ -1,9 +1,18 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Response } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Response,
+} from '@nestjs/common';
 
 @Controller('courses')
 export class CoursesController {
-
-
   @Get('list')
   findAll(@Response() response) {
     return response.status(200).send('Listagem de recursos');
@@ -11,7 +20,7 @@ export class CoursesController {
 
   @Get('list/:id')
   findOne(@Param() params) {
-    const { id } = params
+    const { id } = params;
 
     return `Curso de id ${id}`;
   }
@@ -19,7 +28,16 @@ export class CoursesController {
   @Post('teste')
   @HttpCode(HttpStatus.NO_CONTENT)
   create(@Body() body) {
-      return body;
+    return body;
   }
 
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() body) {
+    return `Atualização do curso ${id}`;
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return `Deleção do curso ${id}`;
+  }
 }
