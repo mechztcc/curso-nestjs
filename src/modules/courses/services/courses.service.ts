@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Course } from '../entities/course.entity';
-
 
 @Injectable()
 export class CoursesService {
@@ -18,9 +17,15 @@ export class CoursesService {
   }
 
   findOne(id: number) {
-    return this.courses.find((course) => {
+    const course = this.courses.find((course) => {
       return course.id == id;
     });
+
+    if (!course) {
+      throw new HttpException(`Course ${id} not found`, HttpStatus.NOT_FOUND);
+    }
+
+    return course;
   }
 
   create(createCourseDto: any) {
@@ -36,8 +41,8 @@ export class CoursesService {
   remove(id: number) {
     const indexCourse = this.courses.findIndex((course) => course.id);
 
-    if(indexCourse >= 0) {
-        this.courses.splice(indexCourse, 1);
+    if (indexCourse >= 0) {
+      this.courses.splice(indexCourse, 1);
     }
   }
 }
